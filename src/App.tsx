@@ -18,6 +18,7 @@ import { createClient } from "graphql-ws";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { authProvider } from "./authProvider";
 import { ColorModeContextProvider } from "./contexts/color-mode";
+import { DataProvider, LiveProvider } from "./providers";
 
 const API_URL = "https://api.nestjs-query.refine.dev/graphql";
 const WS_URL = "wss://api.nestjs-query.refine.dev/graphql";
@@ -30,12 +31,11 @@ function App() {
     <BrowserRouter>
       <GitHubBanner />
       <RefineKbarProvider>
-        <ColorModeContextProvider>
           <AntdApp>
             <DevtoolsProvider>
               <Refine
-                dataProvider={dataProvider(gqlClient)}
-                liveProvider={liveProvider(wsClient)}
+                dataProvider={DataProvider}
+                liveProvider={LiveProvider}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
                 authProvider={authProvider}
@@ -57,7 +57,6 @@ function App() {
               <DevtoolsPanel />
             </DevtoolsProvider>
           </AntdApp>
-        </ColorModeContextProvider>
       </RefineKbarProvider>
     </BrowserRouter>
   );
